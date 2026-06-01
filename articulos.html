@@ -68,85 +68,7 @@
   </div>
 
   <div class="cards-grid" id="articulos-grid">
-
-    <article class="card" data-cat="Política">
-      <div class="card-img" style="height:180px; background:var(--cafe);">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Política</span>
-        <h3>Construyendo desde abajo: el poder de lo colectivo</h3>
-        <p>Una mirada sobre cómo las organizaciones de base transforman realidades a través de la acción comunitaria.</p>
-        <div class="card-meta"><span>12 mayo 2025</span><span>5 min</span></div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card" data-cat="Cultura">
-      <div class="card-img" style="height:180px; background:var(--cafe-mid);">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Cultura</span>
-        <h3>Arte y resistencia: lenguajes que no se silencian</h3>
-        <p>El arte como herramienta de resistencia cultural y su papel en los movimientos sociales contemporáneos.</p>
-        <div class="card-meta"><span>3 abril 2025</span><span>7 min</span></div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card" data-cat="Territorio">
-      <div class="card-img" style="height:180px; background:#5c2d0e;">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Territorio</span>
-        <h3>Regeneración urbana: la ciudad que queremos</h3>
-        <p>Reflexiones sobre el derecho a la ciudad y cómo imaginar espacios públicos más justos e inclusivos.</p>
-        <div class="card-meta"><span>18 marzo 2025</span><span>6 min</span></div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card" data-cat="Economía">
-      <div class="card-img" style="height:180px; background:#3d1a06;">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Economía</span>
-        <h3>Economía solidaria: más allá del mercado</h3>
-        <p>Exploramos experiencias de economías comunitarias que desafían el modelo dominante.</p>
-        <div class="card-meta"><span>2 marzo 2025</span><span>8 min</span></div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card" data-cat="Internacional">
-      <div class="card-img" style="height:180px; background:#6b3a1f;">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Internacional</span>
-        <h3>América Latina: el despertar de los pueblos</h3>
-        <p>Un recorrido por los movimientos de transformación social que recorren el continente.</p>
-        <div class="card-meta"><span>15 feb 2025</span><span>9 min</span></div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card" data-cat="Política">
-      <div class="card-img" style="height:180px; background:#4a2209;">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Política</span>
-        <h3>Participación juvenil: el futuro en el presente</h3>
-        <p>Las nuevas generaciones en la política: desafíos, oportunidades y formas de organización.</p>
-        <div class="card-meta"><span>28 ene 2025</span><span>5 min</span></div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
+    <p style="text-align:center; color:var(--cafe-mid); font-family:'Lora',serif;">Cargando artículos...</p>
   </div>
 </div>
 
@@ -167,20 +89,46 @@
     document.getElementById('navLinks').classList.toggle('open')
   );
 
-  // Filtros por categoría
-  const filtros = document.querySelectorAll('.filtro-btn');
-  const cards   = document.querySelectorAll('#articulos-grid .card');
+  function renderCard(a) {
+    const imgHtml = a.imagen
+      ? `<img src="${a.imagen}" alt="${a.titulo}" style="width:100%;height:100%;object-fit:cover;">`
+      : `<span style="font-size:0.8rem; opacity:0.4; color:var(--durazno);">Sin imagen</span>`;
+    return `
+      <article class="card" data-cat="${a.categoria}">
+        <div class="card-img" style="height:180px; background:var(--cafe); display:flex; align-items:center; justify-content:center;">
+          ${imgHtml}
+        </div>
+        <div class="card-body">
+          <span class="card-tag">${a.categoria}</span>
+          <h3>${a.titulo}</h3>
+          <p>${a.resumen}</p>
+          <div class="card-meta"><span>${a.fecha}</span><span>${a.lectura}</span></div>
+          <a href="articulo.html?slug=${a.slug}" class="card-link">Leer más →</a>
+        </div>
+      </article>`;
+  }
 
-  filtros.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filtros.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cat = btn.dataset.cat;
-      cards.forEach(card => {
-        card.style.display = (cat === 'todos' || card.dataset.cat === cat) ? 'flex' : 'none';
+  let todosLosArticulos = [];
+
+  fetch('articulos.json')
+    .then(r => r.json())
+    .then(articulos => {
+      todosLosArticulos = articulos;
+      const grid = document.getElementById('articulos-grid');
+      grid.innerHTML = articulos.map(renderCard).join('');
+
+      // Filtros
+      document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.dataset.cat;
+          document.querySelectorAll('#articulos-grid .card').forEach(card => {
+            card.style.display = (cat === 'todos' || card.dataset.cat === cat) ? 'flex' : 'none';
+          });
+        });
       });
     });
-  });
 </script>
 
 </body>

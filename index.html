@@ -44,56 +44,8 @@
     <p>Reflexiones, análisis y textos de nuestra agrupación</p>
   </div>
 
-  <div class="cards-grid">
-
-    <article class="card">
-      <div class="card-img" style="height:180px; background:var(--cafe);">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Política</span>
-        <h3>Construyendo desde abajo: el poder de lo colectivo</h3>
-        <p>Una mirada sobre cómo las organizaciones de base transforman realidades a través de la acción comunitaria.</p>
-        <div class="card-meta">
-          <span>12 mayo 2025</span>
-          <span>5 min lectura</span>
-        </div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="card-img" style="height:180px; background:var(--cafe-mid);">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Cultura</span>
-        <h3>Arte y resistencia: lenguajes que no se silencian</h3>
-        <p>El arte como herramienta de resistencia cultural y su papel en los movimientos sociales contemporáneos.</p>
-        <div class="card-meta">
-          <span>3 abril 2025</span>
-          <span>7 min lectura</span>
-        </div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="card-img" style="height:180px; background:#5c2d0e;">
-        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
-      </div>
-      <div class="card-body">
-        <span class="card-tag">Territorio</span>
-        <h3>Regeneración urbana: la ciudad que queremos</h3>
-        <p>Reflexiones sobre el derecho a la ciudad y cómo imaginar espacios públicos más justos e inclusivos.</p>
-        <div class="card-meta">
-          <span>18 marzo 2025</span>
-          <span>6 min lectura</span>
-        </div>
-        <a href="#" class="card-link">Leer más →</a>
-      </div>
-    </article>
-
+  <div class="cards-grid" id="home-articulos">
+    <p style="text-align:center; color:var(--cafe-mid); font-family:'Lora',serif;">Cargando artículos...</p>
   </div>
 
   <div class="section-footer">
@@ -216,6 +168,31 @@
   links.querySelectorAll('a').forEach(a =>
     a.addEventListener('click', () => links.classList.remove('open'))
   );
+
+  // Cargar 3 artículos destacados desde JSON
+  fetch('articulos.json')
+    .then(r => r.json())
+    .then(articulos => {
+      const grid = document.getElementById('home-articulos');
+      grid.innerHTML = articulos.slice(0, 3).map(a => {
+        const imgHtml = a.imagen
+          ? `<img src="${a.imagen}" alt="${a.titulo}" style="width:100%;height:100%;object-fit:cover;">`
+          : `<span style="font-size:0.8rem; opacity:0.4; color:var(--durazno);">Sin imagen</span>`;
+        return `
+          <article class="card">
+            <div class="card-img" style="height:180px; background:var(--cafe); display:flex; align-items:center; justify-content:center;">
+              ${imgHtml}
+            </div>
+            <div class="card-body">
+              <span class="card-tag">${a.categoria}</span>
+              <h3>${a.titulo}</h3>
+              <p>${a.resumen}</p>
+              <div class="card-meta"><span>${a.fecha}</span><span>${a.lectura} lectura</span></div>
+              <a href="articulo.html?slug=${a.slug}" class="card-link">Leer más →</a>
+            </div>
+          </article>`;
+      }).join('');
+    });
 
   // Formulario (demo)
   function handleForm(e) {

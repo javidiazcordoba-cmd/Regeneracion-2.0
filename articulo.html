@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Artículo — Regeneración 2.0</title>
+  <meta name="description" id="page-desc" content="" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .articulo-hero {
+      background: var(--cafe);
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .articulo-hero .categoria-tag {
+      display: inline-block;
+      background: var(--durazno);
+      color: var(--cafe);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.9rem;
+      border-radius: 3px;
+      margin-bottom: 1.2rem;
+    }
+
+    .articulo-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--durazno);
+      max-width: 760px;
+      margin: 0 auto 1.2rem;
+      line-height: 1.2;
+    }
+
+    .articulo-meta {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      color: rgba(255,228,212,0.65);
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+    }
+
+    .articulo-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    /* Imagen destacada */
+    .articulo-imagen {
+      max-width: 860px;
+      margin: 0 auto -3rem;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .articulo-imagen img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(65,31,11,0.25);
+    }
+
+    .articulo-imagen-placeholder {
+      width: 100%;
+      aspect-ratio: 16/7;
+      background: var(--cafe-mid);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,228,212,0.3);
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      box-shadow: 0 16px 48px rgba(65,31,11,0.25);
+    }
+
+    /* Cuerpo del artículo */
+    .articulo-cuerpo {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 2rem 4rem;
+    }
+
+    .articulo-cuerpo p {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: #2a1205;
+      margin-bottom: 1.5rem;
+    }
+
+    .articulo-cuerpo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--cafe);
+      margin: 2.5rem 0 1rem;
+    }
+
+    /* Barra de progreso de lectura */
+    .progress-bar {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--cafe);
+      z-index: 99;
+      transition: width 0.1s linear;
+    }
+
+    /* Volver */
+    .volver-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--cafe-mid);
+      text-decoration: none;
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .volver-link:hover { color: var(--cafe); }
+
+    /* Artículos relacionados */
+    .relacionados {
+      background: var(--blanco);
+      padding: 4rem 2rem;
+    }
+
+    .relacionados h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--cafe);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .relacionados .section-divider { margin-bottom: 2.5rem; }
+
+    /* Error */
+    .error-msg {
+      text-align: center;
+      padding: 8rem 2rem;
+      font-family: 'Lora', serif;
+      color: var(--cafe-mid);
+    }
+    .error-msg h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--cafe); margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Logo.png" alt="Regeneración 2.0" style="height:42px; width:auto;" />
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="articulos.html">Artículos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+    <li><a href="index.html" class="nav-cta">Inicio</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- CONTENIDO DINÁMICO -->
+<div id="app"></div>
+
+<script>
+  // Hamburguesa
+  document.getElementById('navToggle').addEventListener('click', () =>
+    document.getElementById('navLinks').classList.toggle('open')
+  );
+
+  // Barra de progreso de lectura
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    document.getElementById('progressBar').style.width = progress + '%';
+  });
+
+  // Obtener slug de la URL
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+
+  // Renderizar artículo
+  fetch('articulos.json')
+    .then(r => r.json())
+    .then(articulos => {
+      const art = articulos.find(a => a.slug === slug);
+
+      if (!art) {
+        document.getElementById('app').innerHTML = `
+          <div class="error-msg">
+            <h2>Artículo no encontrado</h2>
+            <p>El artículo que buscas no existe o fue eliminado.</p>
+            <a href="articulos.html" class="btn btn-primary" style="margin-top:1.5rem; display:inline-block;">Ver todos los artículos</a>
+          </div>`;
+        return;
+      }
+
+      // Actualizar metadatos
+      document.getElementById('page-title').textContent = art.titulo + ' — Regeneración 2.0';
+      document.getElementById('page-desc').content = art.resumen;
+
+      // Renderizar contenido
+      const bloques = art.contenido.map(b => {
+        if (b.tipo === 'parrafo')  return `<p>${b.texto}</p>`;
+        if (b.tipo === 'subtitulo') return `<h2>${b.texto}</h2>`;
+        if (b.tipo === 'cita')     return `<blockquote style="border-left:4px solid var(--cafe); padding-left:1.5rem; margin:2rem 0; font-style:italic; color:var(--cafe-mid);">${b.texto}</blockquote>`;
+        return '';
+      }).join('');
+
+      // Imagen o placeholder
+      const imgHtml = art.imagen
+        ? `<img src="${art.imagen}" alt="${art.titulo}" />`
+        : `<div class="articulo-imagen-placeholder">Imagen del artículo</div>`;
+
+      // Artículos relacionados (misma categoría, excluyendo el actual)
+      const relacionados = articulos
+        .filter(a => a.categoria === art.categoria && a.slug !== art.slug)
+        .slice(0, 3);
+
+      const relacionadosHtml = relacionados.length ? `
+        <section class="relacionados">
+          <h2>Artículos relacionados</h2>
+          <div class="section-divider" style="margin:0.6rem auto 2.5rem;"></div>
+          <div class="cards-grid" style="max-width:1000px; margin:0 auto;">
+            ${relacionados.map(r => `
+              <article class="card">
+                <div class="card-img" style="height:160px; background:var(--cafe); display:flex; align-items:center; justify-content:center;">
+                  ${r.imagen ? `<img src="${r.imagen}" alt="${r.titulo}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:0.8rem; opacity:0.4; color:var(--durazno);">Sin imagen</span>`}
+                </div>
+                <div class="card-body">
+                  <span class="card-tag">${r.categoria}</span>
+                  <h3>${r.titulo}</h3>
+                  <p>${r.resumen}</p>
+                  <div class="card-meta"><span>${r.fecha}</span><span>${r.lectura}</span></div>
+                  <a href="articulo.html?slug=${r.slug}" class="card-link">Leer más →</a>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </section>` : '';
+
+      document.getElementById('app').innerHTML = `
+        <!-- HERO -->
+        <div class="articulo-hero">
+          <span class="categoria-tag">${art.categoria}</span>
+          <h1>${art.titulo}</h1>
+          <div class="articulo-meta">
+            <span>📅 ${art.fecha}</span>
+            <span>⏱ ${art.lectura} lectura</span>
+            <span>✍️ ${art.autor}</span>
+          </div>
+        </div>
+
+        <!-- IMAGEN -->
+        <div style="background:var(--durazno); padding-top:3rem;">
+          <div class="articulo-imagen">${imgHtml}</div>
+        </div>
+
+        <!-- CUERPO -->
+        <div style="background:var(--durazno);">
+          <div class="articulo-cuerpo">
+            <a href="articulos.html" class="volver-link">← Volver a artículos</a>
+            ${bloques}
+          </div>
+        </div>
+
+        <!-- RELACIONADOS -->
+        ${relacionadosHtml}
+
+        <!-- FOOTER -->
+        <footer>
+          <p>© 2025 <strong>Regeneración 2.0</strong> — Todos los derechos reservados</p>
+          <p style="margin-top:0.5rem;">
+            <a href="index.html">Inicio</a> ·
+            <a href="articulos.html">Artículos</a> ·
+            <a href="eventos.html">Eventos</a> ·
+            <a href="index.html#contacto">Contacto</a>
+          </p>
+        </footer>
+      `;
+    })
+    .catch(() => {
+      document.getElementById('app').innerHTML = `
+        <div class="error-msg">
+          <h2>Error al cargar el artículo</h2>
+          <p>No se pudo conectar con la base de datos. Intenta de nuevo.</p>
+        </div>`;
+    });
+</script>
+
+</body>
+</html>
