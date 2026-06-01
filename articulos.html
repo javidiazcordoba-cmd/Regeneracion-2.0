@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artículos — Regeneración 2.0</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .filtros {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      justify-content: center;
+    }
+    .filtro-btn {
+      padding: 0.4rem 1.1rem;
+      border-radius: 20px;
+      border: 2px solid var(--cafe);
+      background: transparent;
+      color: var(--cafe);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filtro-btn:hover,
+    .filtro-btn.active {
+      background: var(--cafe);
+      color: var(--durazno);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="Regeneración 2.0" style="height:42px; width:auto;" />
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#articulos">Artículos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+    <li><a href="index.html" class="nav-cta">Inicio</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <h1>Artículos</h1>
+  <p>Reflexiones, análisis y textos de nuestra agrupación</p>
+</div>
+
+<!-- CONTENIDO -->
+<div class="page-content">
+
+  <!-- Filtros por categoría -->
+  <div class="filtros" id="filtros">
+    <button class="filtro-btn active" data-cat="todos">Todos</button>
+    <button class="filtro-btn" data-cat="Política">Política</button>
+    <button class="filtro-btn" data-cat="Cultura">Cultura</button>
+    <button class="filtro-btn" data-cat="Territorio">Territorio</button>
+    <button class="filtro-btn" data-cat="Economía">Economía</button>
+    <button class="filtro-btn" data-cat="Internacional">Internacional</button>
+  </div>
+
+  <div class="cards-grid" id="articulos-grid">
+
+    <article class="card" data-cat="Política">
+      <div class="card-img" style="height:180px; background:var(--cafe);">
+        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Política</span>
+        <h3>Construyendo desde abajo: el poder de lo colectivo</h3>
+        <p>Una mirada sobre cómo las organizaciones de base transforman realidades a través de la acción comunitaria.</p>
+        <div class="card-meta"><span>12 mayo 2025</span><span>5 min</span></div>
+        <a href="#" class="card-link">Leer más →</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="Cultura">
+      <div class="card-img" style="height:180px; background:var(--cafe-mid);">
+        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Cultura</span>
+        <h3>Arte y resistencia: lenguajes que no se silencian</h3>
+        <p>El arte como herramienta de resistencia cultural y su papel en los movimientos sociales contemporáneos.</p>
+        <div class="card-meta"><span>3 abril 2025</span><span>7 min</span></div>
+        <a href="#" class="card-link">Leer más →</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="Territorio">
+      <div class="card-img" style="height:180px; background:#5c2d0e;">
+        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Territorio</span>
+        <h3>Regeneración urbana: la ciudad que queremos</h3>
+        <p>Reflexiones sobre el derecho a la ciudad y cómo imaginar espacios públicos más justos e inclusivos.</p>
+        <div class="card-meta"><span>18 marzo 2025</span><span>6 min</span></div>
+        <a href="#" class="card-link">Leer más →</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="Economía">
+      <div class="card-img" style="height:180px; background:#3d1a06;">
+        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Economía</span>
+        <h3>Economía solidaria: más allá del mercado</h3>
+        <p>Exploramos experiencias de economías comunitarias que desafían el modelo dominante.</p>
+        <div class="card-meta"><span>2 marzo 2025</span><span>8 min</span></div>
+        <a href="#" class="card-link">Leer más →</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="Internacional">
+      <div class="card-img" style="height:180px; background:#6b3a1f;">
+        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Internacional</span>
+        <h3>América Latina: el despertar de los pueblos</h3>
+        <p>Un recorrido por los movimientos de transformación social que recorren el continente.</p>
+        <div class="card-meta"><span>15 feb 2025</span><span>9 min</span></div>
+        <a href="#" class="card-link">Leer más →</a>
+      </div>
+    </article>
+
+    <article class="card" data-cat="Política">
+      <div class="card-img" style="height:180px; background:#4a2209;">
+        <span style="font-size:0.85rem; opacity:0.5;">Imagen del artículo</span>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Política</span>
+        <h3>Participación juvenil: el futuro en el presente</h3>
+        <p>Las nuevas generaciones en la política: desafíos, oportunidades y formas de organización.</p>
+        <div class="card-meta"><span>28 ene 2025</span><span>5 min</span></div>
+        <a href="#" class="card-link">Leer más →</a>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Regeneración 2.0</strong> — Todos los derechos reservados</p>
+  <p style="margin-top:0.5rem;">
+    <a href="index.html">Inicio</a> ·
+    <a href="articulos.html">Artículos</a> ·
+    <a href="eventos.html">Eventos</a> ·
+    <a href="index.html#contacto">Contacto</a>
+  </p>
+</footer>
+
+<script>
+  // Hamburguesa
+  document.getElementById('navToggle').addEventListener('click', () =>
+    document.getElementById('navLinks').classList.toggle('open')
+  );
+
+  // Filtros por categoría
+  const filtros = document.querySelectorAll('.filtro-btn');
+  const cards   = document.querySelectorAll('#articulos-grid .card');
+
+  filtros.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filtros.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      cards.forEach(card => {
+        card.style.display = (cat === 'todos' || card.dataset.cat === cat) ? 'flex' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

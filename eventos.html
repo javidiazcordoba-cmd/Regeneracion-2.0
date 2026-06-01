@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventos — Regeneración 2.0</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .eventos-tabs {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .tab-btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      border: 2px solid var(--cafe);
+      background: transparent;
+      color: var(--cafe);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--cafe);
+      color: var(--durazno);
+    }
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+
+    .evento-pasado { opacity: 0.7; }
+    .evento-pasado .evento-fecha { background: #888; }
+    .badge-pasado {
+      background: #999;
+      color: white;
+      font-size: 0.72rem;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.6rem;
+      border-radius: 3px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="Regeneración 2.0" style="height:42px; width:auto;" />
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="articulos.html">Artículos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+    <li><a href="index.html" class="nav-cta">Inicio</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <h1>Eventos</h1>
+  <p>Talleres, asambleas y encuentros de Regeneración 2.0</p>
+</div>
+
+<!-- CONTENIDO -->
+<div class="page-content">
+
+  <div class="eventos-tabs">
+    <button class="tab-btn active" data-tab="proximos">Próximos</button>
+    <button class="tab-btn" data-tab="pasados">Pasados</button>
+  </div>
+
+  <!-- PRÓXIMOS -->
+  <div class="tab-section active" id="tab-proximos">
+    <div class="eventos-list">
+
+      <div class="evento-card">
+        <div class="evento-fecha">
+          <span class="evento-dia">14</span>
+          <span class="evento-mes">JUN</span>
+        </div>
+        <div class="evento-info">
+          <h3>Asamblea abierta: agenda 2025</h3>
+          <p>📍 Casa Cultural del Barrio · 18:00 hrs</p>
+          <p>Espacio de participación para definir las líneas de acción del segundo semestre. Todas y todos son bienvenidos.</p>
+          <span class="evento-badge">Presencial</span>
+        </div>
+      </div>
+
+      <div class="evento-card">
+        <div class="evento-fecha">
+          <span class="evento-dia">28</span>
+          <span class="evento-mes">JUN</span>
+        </div>
+        <div class="evento-info">
+          <h3>Taller: Comunicación política y redes</h3>
+          <p>📍 Online (Zoom) · 19:00 hrs</p>
+          <p>Aprende a construir mensajes efectivos y a manejar la comunicación digital de tu organización.</p>
+          <span class="evento-badge">Online</span>
+        </div>
+      </div>
+
+      <div class="evento-card">
+        <div class="evento-fecha">
+          <span class="evento-dia">12</span>
+          <span class="evento-mes">JUL</span>
+        </div>
+        <div class="evento-info">
+          <h3>Foro: Movimientos sociales en América Latina</h3>
+          <p>📍 Auditorio Municipal · 10:00 hrs</p>
+          <p>Panel con representantes de distintas organizaciones del continente. Entrada libre.</p>
+          <span class="evento-badge">Presencial</span>
+        </div>
+      </div>
+
+      <div class="evento-card">
+        <div class="evento-fecha">
+          <span class="evento-dia">26</span>
+          <span class="evento-mes">JUL</span>
+        </div>
+        <div class="evento-info">
+          <h3>Ciclo de cine político: debate y reflexión</h3>
+          <p>📍 Espacio Cultural Comunitario · 20:00 hrs</p>
+          <p>Proyección de documentales seguida de debate abierto sobre los temas que abordan.</p>
+          <span class="evento-badge">Presencial</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PASADOS -->
+  <div class="tab-section" id="tab-pasados">
+    <div class="eventos-list">
+
+      <div class="evento-card evento-pasado">
+        <div class="evento-fecha">
+          <span class="evento-dia">10</span>
+          <span class="evento-mes">MAY</span>
+        </div>
+        <div class="evento-info">
+          <h3>Lanzamiento Regeneración 2.0</h3>
+          <p>📍 Sede central · 19:00 hrs</p>
+          <p>Presentación oficial del relanzamiento de la agrupación con nuevo nombre e imagen.</p>
+          <span class="badge-pasado">Finalizado</span>
+        </div>
+      </div>
+
+      <div class="evento-card evento-pasado">
+        <div class="evento-fecha">
+          <span class="evento-dia">22</span>
+          <span class="evento-mes">MAR</span>
+        </div>
+        <div class="evento-info">
+          <h3>Taller de formación política — módulo 1</h3>
+          <p>📍 Online · 18:30 hrs</p>
+          <p>Introducción a teoría política y organización comunitaria. Primer módulo de la serie.</p>
+          <span class="badge-pasado">Finalizado</span>
+        </div>
+      </div>
+
+      <div class="evento-card evento-pasado">
+        <div class="evento-fecha">
+          <span class="evento-dia">5</span>
+          <span class="evento-mes">FEB</span>
+        </div>
+        <div class="evento-info">
+          <h3>Charla: Feminismo y organización popular</h3>
+          <p>📍 Plaza pública del barrio · 17:00 hrs</p>
+          <p>Encuentro abierto sobre la intersección entre feminismo y luchas populares.</p>
+          <span class="badge-pasado">Finalizado</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ REDES SOCIALES ============ -->
+<section style="background: var(--cafe); padding: 4rem 2rem; text-align: center;">
+  <h2 style="font-family: 'Playfair Display', serif; color: var(--durazno); font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 0.5rem;">Síguenos</h2>
+  <div style="width:50px; height:2px; background:var(--durazno); margin: 0.6rem auto 1rem;"></div>
+  <p style="color: rgba(255,228,212,0.75); font-family: 'Lora', serif; margin-bottom: 2.5rem; max-width: 420px; margin-left: auto; margin-right: auto;">Entérate de nuestros eventos y publicaciones antes que nadie</p>
+
+  <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap;">
+
+    <a href="#" style="display:flex; flex-direction:column; align-items:center; gap:0.6rem; padding:1.5rem 2rem; background:rgba(255,228,212,0.08); border:1px solid rgba(255,228,212,0.2); border-radius:8px; color:var(--durazno); text-decoration:none; min-width:120px; transition:background 0.2s;"
+       onmouseover="this.style.background='rgba(255,228,212,0.16)'" onmouseout="this.style.background='rgba(255,228,212,0.08)'">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span style="font-family:'Lora',serif; font-size:0.9rem;">Instagram</span>
+    </a>
+
+    <a href="#" style="display:flex; flex-direction:column; align-items:center; gap:0.6rem; padding:1.5rem 2rem; background:rgba(255,228,212,0.08); border:1px solid rgba(255,228,212,0.2); border-radius:8px; color:var(--durazno); text-decoration:none; min-width:120px; transition:background 0.2s;"
+       onmouseover="this.style.background='rgba(255,228,212,0.16)'" onmouseout="this.style.background='rgba(255,228,212,0.08)'">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span style="font-family:'Lora',serif; font-size:0.9rem;">Twitter / X</span>
+    </a>
+
+    <a href="#" style="display:flex; flex-direction:column; align-items:center; gap:0.6rem; padding:1.5rem 2rem; background:rgba(255,228,212,0.08); border:1px solid rgba(255,228,212,0.2); border-radius:8px; color:var(--durazno); text-decoration:none; min-width:120px; transition:background 0.2s;"
+       onmouseover="this.style.background='rgba(255,228,212,0.16)'" onmouseout="this.style.background='rgba(255,228,212,0.08)'">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      <span style="font-family:'Lora',serif; font-size:0.9rem;">Facebook</span>
+    </a>
+
+    <a href="#" style="display:flex; flex-direction:column; align-items:center; gap:0.6rem; padding:1.5rem 2rem; background:rgba(255,228,212,0.08); border:1px solid rgba(255,228,212,0.2); border-radius:8px; color:var(--durazno); text-decoration:none; min-width:120px; transition:background 0.2s;"
+       onmouseover="this.style.background='rgba(255,228,212,0.16)'" onmouseout="this.style.background='rgba(255,228,212,0.08)'">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      <span style="font-family:'Lora',serif; font-size:0.9rem;">Telegram</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Regeneración 2.0</strong> — Todos los derechos reservados</p>
+  <p style="margin-top:0.5rem;">
+    <a href="index.html">Inicio</a> ·
+    <a href="articulos.html">Artículos</a> ·
+    <a href="eventos.html">Eventos</a> ·
+    <a href="index.html#contacto">Contacto</a>
+  </p>
+</footer>
+
+<script>
+  // Hamburguesa
+  document.getElementById('navToggle').addEventListener('click', () =>
+    document.getElementById('navLinks').classList.toggle('open')
+  );
+
+  // Tabs proximos / pasados
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
