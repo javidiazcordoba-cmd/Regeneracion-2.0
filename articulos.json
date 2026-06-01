@@ -1,4 +1,19 @@
 [
+{
+  "slug": "nombre-del-articulo",
+  "titulo": "Título completo",
+  "categoria": "Política",
+  "fecha": "1 junio 2025",
+  "lectura": "5 min",
+  "autor": "Equipo Regeneración",
+  "imagen": "",
+  "resumen": "Texto breve para la tarjeta.",
+  "contenido": [
+    { "tipo": "parrafo", "texto": "Primer párrafo..." },
+    { "tipo": "subtitulo", "texto": "Un subtítulo" },
+    { "tipo": "parrafo", "texto": "Otro párrafo..." }
+  ]
+}
   {
     "slug": "construyendo-desde-abajo",
     "titulo": "Construyendo desde abajo: el poder de lo colectivo",
