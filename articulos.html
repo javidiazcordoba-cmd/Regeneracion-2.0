@@ -43,7 +43,8 @@
     <li><a href="index.html#articulos">Artículos</a></li>
     <li><a href="eventos.html">Eventos</a></li>
     <li><a href="index.html#contacto">Contacto</a></li>
-    <li><a href="index.html" class="nav-cta">Inicio</a></li>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="subir.html" class="nav-cta">Publicar</a></li>
   </ul>
   <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
 </nav>
@@ -83,6 +84,12 @@
   </p>
 </footer>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+
 <script>
   // Hamburguesa
   document.getElementById('navToggle').addEventListener('click', () =>
@@ -110,8 +117,7 @@
 
   let todosLosArticulos = [];
 
-  fetch('articulos.json')
-    .then(r => r.json())
+  RegenDB.cargarArticulos()
     .then(articulos => {
       todosLosArticulos = articulos;
       const grid = document.getElementById('articulos-grid');

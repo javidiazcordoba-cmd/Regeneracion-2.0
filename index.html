@@ -19,7 +19,8 @@
     <li><a href="#articulos">Artículos</a></li>
     <li><a href="#eventos">Eventos</a></li>
     <li><a href="#contacto">Contacto</a></li>
-    <li><a href="articulos.html" class="nav-cta">Ver todo</a></li>
+    <li><a href="articulos.html">Ver todo</a></li>
+    <li><a href="subir.html" class="nav-cta">Publicar</a></li>
   </ul>
 
   <div class="nav-toggle" id="navToggle" aria-label="Menú">
@@ -158,6 +159,12 @@
   </p>
 </footer>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+
 <script>
   // Menú hamburguesa
   const toggle = document.getElementById('navToggle');
@@ -169,9 +176,8 @@
     a.addEventListener('click', () => links.classList.remove('open'))
   );
 
-  // Cargar 3 artículos destacados desde JSON
-  fetch('articulos.json')
-    .then(r => r.json())
+  // Cargar 3 artículos destacados (Firebase + JSON)
+  RegenDB.cargarArticulos()
     .then(articulos => {
       const grid = document.getElementById('home-articulos');
       grid.innerHTML = articulos.slice(0, 3).map(a => {

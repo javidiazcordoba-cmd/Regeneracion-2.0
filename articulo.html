@@ -164,13 +164,20 @@
     <li><a href="articulos.html">Artículos</a></li>
     <li><a href="eventos.html">Eventos</a></li>
     <li><a href="index.html#contacto">Contacto</a></li>
-    <li><a href="index.html" class="nav-cta">Inicio</a></li>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="subir.html" class="nav-cta">Publicar</a></li>
   </ul>
   <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
 </nav>
 
 <!-- CONTENIDO DINÁMICO -->
 <div id="app"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
 
 <script>
   // Hamburguesa
@@ -191,8 +198,7 @@
   const slug = params.get('slug');
 
   // Renderizar artículo
-  fetch('articulos.json')
-    .then(r => r.json())
+  RegenDB.cargarArticulos()
     .then(articulos => {
       const art = articulos.find(a => a.slug === slug);
 

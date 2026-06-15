@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publicar un artículo — Regeneración 2.0</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .form-wrap { max-width: 760px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+    .paso {
+      background: var(--blanco);
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 6px 20px rgba(65,31,11,0.07);
+    }
+
+    .paso-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--cafe);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .paso-num {
+      background: var(--cafe);
+      color: var(--durazno);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .paso-ayuda {
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      color: var(--cafe-mid);
+      margin-bottom: 1rem;
+    }
+
+    label.campo { display: block; margin-bottom: 1rem; }
+    label.campo .etiqueta {
+      display: block;
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      color: var(--cafe);
+      font-size: 0.92rem;
+      margin-bottom: 0.35rem;
+    }
+
+    input[type=text], input[type=password], select, textarea {
+      width: 100%;
+      background: var(--gris);
+      border: 1px solid var(--durazno-oscuro);
+      border-radius: 6px;
+      padding: 0.7rem 0.9rem;
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--texto);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--cafe);
+      box-shadow: 0 0 0 3px rgba(65,31,11,0.1);
+    }
+    textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .contador { font-size: 0.78rem; color: var(--cafe-mid); text-align: right; margin-top: 0.2rem; }
+
+    /* Bloques de contenido */
+    .bloque {
+      border: 1px solid var(--durazno-oscuro);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.9rem;
+      background: var(--gris);
+      position: relative;
+    }
+    .bloque-cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .bloque-tipo {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cafe);
+      background: var(--durazno);
+      padding: 0.15rem 0.6rem;
+      border-radius: 4px;
+    }
+    .bloque-ctrl { display: flex; gap: 0.3rem; }
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--durazno-oscuro);
+      color: var(--cafe);
+      width: 30px; height: 30px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1;
+      transition: all 0.15s;
+    }
+    .icon-btn:hover { background: var(--cafe); color: var(--durazno); }
+    .icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .bloque textarea, .bloque input { background: var(--blanco); }
+    .bloque.subtitulo textarea { font-family: 'Playfair Display', serif; font-weight: 600; }
+    .bloque.cita textarea { font-style: italic; }
+
+    .add-botones { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.5rem; }
+    .add-btn {
+      background: transparent;
+      border: 2px dashed var(--durazno-oscuro);
+      color: var(--cafe);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .add-btn:hover { border-color: var(--cafe); background: var(--durazno); }
+
+    /* Imagen */
+    .img-drop {
+      border: 2px dashed var(--durazno-oscuro);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'Lora', serif;
+      color: var(--cafe-mid);
+    }
+    .img-drop:hover { border-color: var(--cafe); background: var(--gris); }
+    .img-preview { max-width: 100%; border-radius: 8px; margin-top: 1rem; display: none; }
+
+    .btn-publicar {
+      width: 100%;
+      background: var(--cafe);
+      color: var(--durazno);
+      border: none;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-publicar:hover:not(:disabled) { background: var(--cafe-mid); transform: translateY(-2px); }
+    .btn-publicar:disabled { opacity: 0.6; cursor: progress; }
+
+    .aviso {
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .aviso.error { background: #f8d7da; color: #842029; display: block; }
+
+    /* Pantalla de éxito */
+    .exito {
+      display: none;
+      text-align: center;
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      box-shadow: 0 6px 20px rgba(65,31,11,0.1);
+    }
+    .exito .check {
+      width: 70px; height: 70px;
+      background: var(--cafe);
+      color: var(--durazno);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 1.2rem;
+    }
+    .exito h2 { font-family: 'Playfair Display', serif; color: var(--cafe); font-size: 1.8rem; margin-bottom: 0.6rem; }
+    .exito p { font-family: 'Lora', serif; color: var(--cafe-mid); margin-bottom: 1.8rem; }
+    .exito .acciones { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="Logo.png" alt="Regeneración 2.0" style="height:42px; width:auto;" />
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="articulos.html">Artículos</a></li>
+    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+    <li><a href="subir.html" class="nav-cta">Publicar</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <h1>Publicar un artículo</h1>
+  <p>Comparte tu texto con la agrupación. Es muy sencillo: rellena los campos y pulsa publicar.</p>
+</div>
+
+<div class="form-wrap">
+
+  <!-- FORMULARIO -->
+  <form id="formArticulo">
+
+    <div id="avisoError" class="aviso error"></div>
+
+    <!-- PASO 1: Datos básicos -->
+    <div class="paso">
+      <div class="paso-titulo"><span class="paso-num">1</span> Datos del artículo</div>
+
+      <label class="campo">
+        <span class="etiqueta">Título *</span>
+        <input type="text" id="titulo" placeholder="Ej. La importancia de la organización vecinal" required maxlength="120" />
+      </label>
+
+      <label class="campo">
+        <span class="etiqueta">Categoría *</span>
+        <select id="categoria" required>
+          <option value="">— Elige una categoría —</option>
+          <option>Política</option>
+          <option>Cultura</option>
+          <option>Territorio</option>
+          <option>Economía</option>
+          <option>Internacional</option>
+        </select>
+      </label>
+
+      <label class="campo">
+        <span class="etiqueta">Tu nombre (autor/a) *</span>
+        <input type="text" id="autor" placeholder="Ej. María González" required maxlength="80" />
+      </label>
+
+      <label class="campo">
+        <span class="etiqueta">Resumen corto *</span>
+        <textarea id="resumen" placeholder="Una o dos frases que describan el artículo. Aparecerá en la tarjeta de la lista." required maxlength="220" style="min-height:70px;"></textarea>
+        <div class="contador"><span id="contResumen">0</span>/220</div>
+      </label>
+    </div>
+
+    <!-- PASO 2: Imagen -->
+    <div class="paso">
+      <div class="paso-titulo"><span class="paso-num">2</span> Imagen destacada <span style="font-weight:400;font-size:0.85rem;color:var(--cafe-mid);">(opcional)</span></div>
+      <div class="paso-ayuda">Una foto o ilustración que acompañe al artículo. Si no añades ninguna, se mostrará un espacio neutro.</div>
+
+      <div class="img-drop" id="imgDrop">
+        📷 Pulsa aquí para elegir una imagen<br>
+        <span style="font-size:0.8rem;">JPG o PNG · se optimiza automáticamente</span>
+      </div>
+      <input type="file" id="imagen" accept="image/*" style="display:none;" />
+      <img id="imgPreview" class="img-preview" alt="Vista previa" />
+    </div>
+
+    <!-- PASO 3: Contenido -->
+    <div class="paso">
+      <div class="paso-titulo"><span class="paso-num">3</span> Contenido del artículo</div>
+      <div class="paso-ayuda">
+        Escribe tu texto por bloques. Usa <strong>Párrafo</strong> para el texto normal,
+        <strong>Subtítulo</strong> para separar secciones y <strong>Cita</strong> para destacar una frase.
+        Puedes reordenar o eliminar bloques con los botones de cada uno.
+      </div>
+
+      <div id="bloques"></div>
+
+      <div class="add-botones">
+        <button type="button" class="add-btn" onclick="agregarBloque('parrafo')">+ Párrafo</button>
+        <button type="button" class="add-btn" onclick="agregarBloque('subtitulo')">+ Subtítulo</button>
+        <button type="button" class="add-btn" onclick="agregarBloque('cita')">+ Cita</button>
+      </div>
+    </div>
+
+    <!-- PASO 4: Clave -->
+    <div class="paso">
+      <div class="paso-titulo"><span class="paso-num">4</span> Clave del grupo</div>
+      <div class="paso-ayuda">Escribe la clave que te dio el equipo de Regeneración para poder publicar.</div>
+      <label class="campo">
+        <input type="password" id="clave" placeholder="Clave del grupo" required />
+      </label>
+    </div>
+
+    <button type="submit" class="btn-publicar" id="btnPublicar">Publicar artículo</button>
+  </form>
+
+  <!-- ÉXITO -->
+  <div class="exito" id="exito">
+    <div class="check">✓</div>
+    <h2>¡Artículo publicado!</h2>
+    <p>Tu texto ya está disponible en la web para toda la agrupación.</p>
+    <div class="acciones">
+      <a id="verArticulo" href="#" class="btn btn-primary">Ver mi artículo</a>
+      <a href="subir.html" class="btn btn-outline" style="color:var(--cafe);border-color:var(--cafe);">Publicar otro</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Regeneración 2.0</strong> — Todos los derechos reservados</p>
+  <p style="margin-top:0.5rem;">
+    <a href="index.html">Inicio</a> ·
+    <a href="articulos.html">Artículos</a> ·
+    <a href="eventos.html">Eventos</a> ·
+    <a href="index.html#contacto">Contacto</a>
+  </p>
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+  // Menú hamburguesa
+  document.getElementById('navToggle').addEventListener('click', () =>
+    document.getElementById('navLinks').classList.toggle('open'));
+
+  // Contador del resumen
+  const resumen = document.getElementById('resumen');
+  resumen.addEventListener('input', () =>
+    document.getElementById('contResumen').textContent = resumen.value.length);
+
+  /* ---------- Bloques de contenido ---------- */
+  const cont = document.getElementById('bloques');
+  const PLACEHOLDERS = {
+    parrafo: 'Escribe aquí un párrafo...',
+    subtitulo: 'Un subtítulo de sección',
+    cita: 'Una frase para destacar'
+  };
+  const NOMBRES = { parrafo: 'Párrafo', subtitulo: 'Subtítulo', cita: 'Cita' };
+
+  function agregarBloque(tipo) {
+    const div = document.createElement('div');
+    div.className = 'bloque ' + tipo;
+    div.dataset.tipo = tipo;
+    div.innerHTML = `
+      <div class="bloque-cabecera">
+        <span class="bloque-tipo">${NOMBRES[tipo]}</span>
+        <div class="bloque-ctrl">
+          <button type="button" class="icon-btn" title="Subir"   onclick="moverBloque(this,-1)">↑</button>
+          <button type="button" class="icon-btn" title="Bajar"   onclick="moverBloque(this, 1)">↓</button>
+          <button type="button" class="icon-btn" title="Eliminar" onclick="eliminarBloque(this)">✕</button>
+        </div>
+      </div>
+      <textarea placeholder="${PLACEHOLDERS[tipo]}" ${tipo!=='parrafo'?'style="min-height:60px;"':''}></textarea>
+    `;
+    cont.appendChild(div);
+    actualizarFlechas();
+    div.querySelector('textarea').focus();
+  }
+
+  function eliminarBloque(btn) {
+    btn.closest('.bloque').remove();
+    actualizarFlechas();
+  }
+
+  function moverBloque(btn, dir) {
+    const b = btn.closest('.bloque');
+    if (dir === -1 && b.previousElementSibling) cont.insertBefore(b, b.previousElementSibling);
+    if (dir === 1 && b.nextElementSibling) cont.insertBefore(b.nextElementSibling, b);
+    actualizarFlechas();
+  }
+
+  function actualizarFlechas() {
+    const bloques = [...cont.children];
+    bloques.forEach((b, i) => {
+      const [up, down] = b.querySelectorAll('.icon-btn');
+      up.disabled = (i === 0);
+      down.disabled = (i === bloques.length - 1);
+    });
+  }
+
+  // Empezamos con un párrafo
+  agregarBloque('parrafo');
+
+  /* ---------- Imagen: vista previa + compresión ---------- */
+  const inputImg = document.getElementById('imagen');
+  const preview  = document.getElementById('imgPreview');
+  let imagenComprimida = null;
+
+  document.getElementById('imgDrop').addEventListener('click', () => inputImg.click());
+
+  inputImg.addEventListener('change', () => {
+    const file = inputImg.files[0];
+    if (!file) return;
+    comprimirImagen(file).then(blob => {
+      imagenComprimida = blob;
+      preview.src = URL.createObjectURL(blob);
+      preview.style.display = 'block';
+    });
+  });
+
+  function comprimirImagen(file) {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 1600;
+        let { width, height } = img;
+        if (width > MAX) { height = height * MAX / width; width = MAX; }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        canvas.toBlob(b => resolve(b), 'image/jpeg', 0.85);
+      };
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  /* ---------- Utilidades ---------- */
+  function generarSlug(titulo) {
+    const base = titulo.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')   // quita acentos
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim().replace(/\s+/g, '-').slice(0, 50);
+    const sufijo = Math.random().toString(36).slice(2, 6);
+    return `${base}-${sufijo}`;
+  }
+
+  function fechaHoy() {
+    const meses = ['enero','febrero','marzo','abril','mayo','junio','julio',
+                   'agosto','septiembre','octubre','noviembre','diciembre'];
+    const d = new Date();
+    return `${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  function calcularLectura(bloques) {
+    const palabras = bloques.reduce((n, b) => n + b.texto.trim().split(/\s+/).filter(Boolean).length, 0);
+    return Math.max(1, Math.round(palabras / 200)) + ' min';
+  }
+
+  function mostrarError(msg) {
+    const a = document.getElementById('avisoError');
+    a.textContent = msg;
+    a.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ---------- Envío ---------- */
+  document.getElementById('formArticulo').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('avisoError').style.display = 'none';
+
+    // Validar clave
+    if (document.getElementById('clave').value.trim() !== RegenDB.CLAVE_DEL_GRUPO) {
+      mostrarError('La clave del grupo no es correcta. Pídela al equipo de Regeneración.');
+      return;
+    }
+
+    // Recoger bloques
+    const bloques = [...cont.children].map(b => ({
+      tipo: b.dataset.tipo,
+      texto: b.querySelector('textarea').value.trim()
+    })).filter(b => b.texto.length > 0);
+
+    if (bloques.length === 0) {
+      mostrarError('Añade al menos un párrafo con contenido.');
+      return;
+    }
+
+    const btn = document.getElementById('btnPublicar');
+    btn.disabled = true;
+    btn.textContent = 'Publicando...';
+
+    try {
+      const titulo = document.getElementById('titulo').value.trim();
+      const slug = generarSlug(titulo);
+
+      // Subir imagen si hay
+      let imagenURL = '';
+      if (imagenComprimida) {
+        btn.textContent = 'Subiendo imagen...';
+        const ref = RegenDB.storage.ref(`articulos/${slug}.jpg`);
+        await ref.put(imagenComprimida);
+        imagenURL = await ref.getDownloadURL();
+      }
+
+      btn.textContent = 'Guardando...';
+      await RegenDB.db.collection('articulos').add({
+        slug,
+        titulo,
+        categoria: document.getElementById('categoria').value,
+        autor: document.getElementById('autor').value.trim(),
+        resumen: document.getElementById('resumen').value.trim(),
+        imagen: imagenURL,
+        fecha: fechaHoy(),
+        lectura: calcularLectura(bloques),
+        contenido: bloques,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      // Éxito
+      document.getElementById('formArticulo').style.display = 'none';
+      document.getElementById('verArticulo').href = `articulo.html?slug=${slug}`;
+      const exito = document.getElementById('exito');
+      exito.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      console.error(err);
+      mostrarError('Hubo un problema al publicar: ' + err.message + '. Revisa tu conexión e inténtalo de nuevo.');
+      btn.disabled = false;
+      btn.textContent = 'Publicar artículo';
+    }
+  });
+</script>
+
+</body>
+</html>
